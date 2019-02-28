@@ -20,11 +20,6 @@ public class Grid {
 	
 	public void render(Graphics g){
 		g.setColor(Color.WHITE);
-	/*	if(row == 0)
-			g.drawLine(column*(GameData.GAME_HEIGHT/50), 0, 0, GameData.GAME_HEIGHT);
-		if (column == 0)s
-			g.drawLine(0, row*(GameData.GAME_HEIGHT/50), GameData.GAME_HEIGHT, 0);*/
-	//	g.drawLine(0, 500, GameData.GAME_WIDTH, 500);
 		if(row == 0)
 			g.drawLine(0, column*(GameData.GAME_HEIGHT/GameData.GRID_COLUMNS), GameData.GAME_HEIGHT, column*(GameData.GAME_HEIGHT/GameData.GRID_COLUMNS));
 		if(column == 0)

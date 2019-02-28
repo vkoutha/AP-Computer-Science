@@ -44,8 +44,10 @@ public class Game implements KeyListener, ActionListener{
 		apple = new Apple();
 		grid = new Grid[GameData.GRID_ROWS][GameData.GRID_COLUMNS];
 		for(int row = 0; row < grid.length; row++)
-			for(int column = 0; column < grid[row].length; column++)
+			for(int column = 0; column < grid[row].length; column++){
 				grid[row][column] = new Grid(row, column);
+			}
+				
 	}
 	
 	public void render(Graphics g){
@@ -55,10 +57,20 @@ public class Game implements KeyListener, ActionListener{
 		snake.render(g);
 		for(int row = 0; row < grid.length; row++)
 			for(int column = 0; column < grid[row].length; column++)
-				grid[row][column].render(g);
+				//grid[row][column].render(g);
+				;
 	}
 	
 	public void update(){
+		int[] tempRow = snake.getRows();
+		int[] tempCol = snake.getColumns();
+//		if(movementDirection == GameData.Directions.UP || movementDirection == GameData.Directions.DOWN){
+//			snake.setColumns(snake.getRows());
+//			snake.setRows(tempCol);
+//		}else{
+//			snake.setRows(snake.getColumns());
+//			snake.setColumns(tempRow);
+//		}
 		if(snake.outOfBounds())
 			System.exit(0);
 		if(movementDirection != null)
@@ -66,6 +78,7 @@ public class Game implements KeyListener, ActionListener{
 		if(apple.isHit()){
 			System.out.println("HIT!!!");
 			apple.spawnNew();
+			snake.increaseLength();
 		}
 	}
 	

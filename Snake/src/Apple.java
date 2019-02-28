@@ -4,28 +4,38 @@ import java.util.Random;
 
 public class Apple {
 	
-	int xPos, yPos;
+	private int[] rows, columns;
 	
 	public Apple(){
-		spawnNew();
+		Random rand = new Random();
+		rows = new int[] {rand.nextInt(GameData.GRID_ROWS)-5};
+		columns = new int[] {rand.nextInt(GameData.GRID_COLUMNS)-5};
 	}
 	
 	public boolean isHit(){
-		if(Game.snake.getColumn() == xPos && Game.snake.getColumn() + GameData.SNAKE_WIDTH == xPos + GameData.APPLE_WIDTH 
-				&& Game.snake.getRow() == yPos && Game.snake.getRow() + GameData.SNAKE_HEIGHT == yPos + GameData.APPLE_HEIGHT)
-					return true;
-		return false;
+		for(int c = 0; c < columns.length; c++)
+			if(columns[c] != Game.snake.getColumns()[c])
+				return false;
+		for(int r = 0; r < columns.length; r++)
+			if(rows[r] != Game.snake.getRows()[r])
+				return false;
+		return true;
 	}
 	
 	public void spawnNew(){
 		Random rand = new Random();
-		xPos = rand.nextInt(Game.frame.getWidth()-(GameData.APPLE_WIDTH*2))+1;
-		yPos = rand.nextInt(Game.frame.getHeight()-(GameData.APPLE_HEIGHT*2))+1;
+		rows = new int[] {rand.nextInt(GameData.GRID_ROWS-2)};
+		System.out.println(rows[0]);
+		columns = new int[] {rand.nextInt(GameData.GRID_COLUMNS-2)};		
+		System.out.println(columns[0]);
 	}
 	
 	public void render(Graphics g){
 		g.setColor(Color.RED);
-		g.fillRect(xPos, yPos, GameData.APPLE_WIDTH, GameData.APPLE_HEIGHT);
+		for(int row = 0; row < rows.length; row++){
+			for(int col = 0; col < columns.length; col++){
+				g.fillRect(columns[col]*GameData.GRID_WIDTH, rows[row]*GameData.GRID_HEIGHT, GameData.GRID_WIDTH, GameData.GRID_HEIGHT);
+			}
+		}
 	}
-
 }

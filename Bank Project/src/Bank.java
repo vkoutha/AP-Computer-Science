@@ -1,9 +1,9 @@
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Vector;
 
 public class Bank {
 
-	BankAccount[] clients = new BankAccount[5];
+	ArrayList<BankAccount> clients = new ArrayList<BankAccount>();
 	BankAccount currentAccount;
 	Scanner input = new Scanner(System.in);
 	boolean toExit = false;
@@ -44,30 +44,15 @@ public class Bank {
 	}
 
 	public void login() {
-
-		boolean noAvailableAccounts = false;
-		boolean accountFound = false;
-		if (clients[0] == null) {
-			System.out.println("No available accounts to login to");
-			noAvailableAccounts = true;
-		}
-
-		if (!noAvailableAccounts) {
-			System.out.println("Enter name");
-			String name = input.nextLine();
-			for (int i = 0; i < clients.length; i++) {
-				if (clients[i] != null && name.equals(clients[i].name)) {
-					currentAccount = clients[i];
-					System.out.println("Successfully logged in as: " + name);
-					accountFound = true;
-					bankAccountMenu();
-					break;
-				}
+		System.out.println("Enter login name");
+		String name = input.nextLine();
+		for(int i = 0; i < clients.size(); i++){
+			if(clients.get(i).name.equals(name)){
+				currentAccount = clients.get(i);
+				return;
 			}
 		}
-		if (!accountFound && !noAvailableAccounts)
-			System.out.println("Account not found! Returning to menu!");
-
+		System.out.println("No account found - Returning to login");
 	}
 
 	public void bankAccountMenu() {
@@ -96,53 +81,22 @@ public class Bank {
 	}
 
 	public void openAccount() {
-		boolean succuessful = false;
-		boolean accountsAvailable = false;
-		for (int i = 0; i < clients.length; i++) {
-			if (clients[i] == null)
-				accountsAvailable = true;
-		}
-
-		if (!accountsAvailable) {
-			System.out.println("No account slots available! Returning to menu!");
-			accountsAvailable = false;
-		}
-
-		if (accountsAvailable) {
-			outerLoop: while (!succuessful) {
-				secondLoop: for (int i = 0; i < clients.length; i++)
-					if (clients[i] == null) {
-						System.out.println("Enter name of account");
-						String name = input.nextLine();
-						System.out.println("user entered " + name);
-						for (int z = 0; z < clients.length; z++) {
-							if (clients[z] != null && clients[z].name.equals(name)) {
-								System.out.println("Account already exists! Try again!");
-								succuessful = false;
-								// openAccount();
-								break secondLoop;
-							}
-						}
-						System.out.println("Enter initial deposit amount");
-						double initBal = 0;
-						try {
-							initBal = input.nextDouble();
-						} catch (Exception e) {
-							System.err.println("TYPE THE RIGHT THINGG!!!! NOW YOURE GOING TO HAVE TO RESTARTTT!!!!");
-							input.nextLine();
-							succuessful = false;
-							// openAccount();
-							break secondLoop;
-						}
-						clients[i] = new BankAccount(name, initBal);
-						currentAccount = clients[i];
-						System.out.println("Account created!");
-						succuessful = true;
-						break outerLoop;
-					}
+		boolean successful = false;
+		System.out.println("Enter name of account");
+		String name = input.nextLine();
+		for(int i = 0; i < clients.size(); i++)
+			if(clients.get(i).equals(name)){
+				System.out.println("Account already exists!");
+				successful = false;
 			}
+		if(successful){
+			System.out.println("Enter balance amount");
+			double initial = input.nextDouble();
+			clients.add(new BankAccount(name, 0));
+		}else{
+			System.out.println("Not successful!");
+			openAccount();
 		}
-//		menu();
 	}
 
 	public void exit() {
