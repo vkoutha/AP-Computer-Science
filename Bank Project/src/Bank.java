@@ -49,6 +49,8 @@ public class Bank {
 		for(int i = 0; i < clients.size(); i++){
 			if(clients.get(i).name.equals(name)){
 				currentAccount = clients.get(i);
+				System.out.println("Successfully logged in");
+				bankAccountMenu();
 				return;
 			}
 		}
@@ -71,17 +73,19 @@ public class Bank {
 		case 3:
 			closeAccount();
 			logOut();
+			System.out.println("Account successfully closed!!");
 			break;
 		case 4:
 			logOut();
 			break;
 		default:
 			System.out.println("Not a valid option! Try again!");
+			bankAccountMenu();
 		}
 	}
 
 	public void openAccount() {
-		boolean successful = false;
+		boolean successful = true;
 		System.out.println("Enter name of account");
 		String name = input.nextLine();
 		for(int i = 0; i < clients.size(); i++)
@@ -92,9 +96,10 @@ public class Bank {
 		if(successful){
 			System.out.println("Enter balance amount");
 			double initial = input.nextDouble();
-			clients.add(new BankAccount(name, 0));
+			clients.add(new BankAccount(name, initial));
+			System.out.println("Account created!");
 		}else{
-			System.out.println("Not successful!");
+			System.out.println("Not successful! Try again");
 			openAccount();
 		}
 	}
@@ -108,9 +113,6 @@ public class Bank {
 		System.out.println("Enter withdrawl amount");
 		double amt = input.nextDouble();
 		currentAccount.withdraw(amt);
-		
-		
-
 	}
 
 	public void deposit() {
@@ -126,31 +128,13 @@ public class Bank {
 	}
 	
 	public void closeAccount() {
-
-		for (int i = 0; i < clients.length; i++)
-			if (clients[i] == currentAccount) {
-				clients[i] = null;
-				System.out.println("ACCOUNT SET TO NULL");
-			}
-		System.out.println("\n\n\n\n\n\n\n");
-
-		BankAccount[] tempClients = new BankAccount[5];
-		for (int i = 0; i < clients.length; i++)
-			if (clients[i] != null)
-				for (int z = 0; z < tempClients.length; z++)
-					if (tempClients[z] == null) {
-						tempClients[z] = clients[i];
-						break;
-					}
-		clients = tempClients;
-		System.out.println("Account closed! Returning to menu");
-		System.out.println("-------------------");
+		BankAccount accToRemove = currentAccount;
+		clients.remove(accToRemove);
 	}
 
 	public void logOut() {
 		System.out.println("Logging out!");
 		currentAccount = null;
-		// menu();
 	}
 
 }
