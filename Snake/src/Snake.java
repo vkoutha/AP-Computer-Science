@@ -42,22 +42,27 @@ public class Snake {
 	}
 	
 	public void increaseLength(){
-		if(direction != null){
-			if(direction == GameData.Directions.UP || direction == GameData.Directions.DOWN){
-				int[] temp = new int[rows.length+1];
-				for(int c = 0; c < rows.length; c++)
-					temp[c] = rows[c];
-				temp[temp.length-1] = rows[rows.length-1]-1;
-				rows = temp;
-			}else{
-				int[] temp = new int[columns.length+1];
-				for(int c = 0; c < columns.length; c++)
-					temp[c] = columns[c];
-				temp[temp.length-1] = columns[columns.length-1]-1;
-				columns = temp;
-			}
+		if(direction == GameData.Directions.UP || direction == GameData.Directions.DOWN){
+			int[] temp = new int[rows.length+1];
+			for(int c = 0; c < rows.length; c++)
+				temp[c] = rows[c];
+			temp[temp.length-1] = rows[rows.length-1]-1;
+			rows = temp;
+			if(direction == GameData.Directions.UP)
+				rows[rows.length-1] = rows[rows.length-2]+1;
+			else
+				rows[rows.length-1] = rows[rows.length-2]-1;
+		}else{
+			int[] temp = new int[columns.length+1];
+			for(int c = 0; c < columns.length; c++)
+				temp[c] = columns[c];
+			temp[temp.length-1] = columns[columns.length-1]-1;
+			columns = temp;
+			if(direction == GameData.Directions.LEFT)
+				columns[columns.length-1] = columns[columns.length-2]-1;
+			else
+				columns[columns.length-1] = columns[columns.length-2]+1;
 		}
-		//length++;
 	}
 	
 	public void setColumns(int[] col){columns = col;}
@@ -79,7 +84,7 @@ public class Snake {
 		g.setColor(Color.GREEN);
 		for(int row = 0; row < rows.length; row++){
 			for(int col = 0; col < columns.length; col++){
-				g.fillRect(columns[col]*GameData.GRID_WIDTH, rows[row]*GameData.GRID_HEIGHT, GameData.GRID_WIDTH, GameData.GRID_HEIGHT);
+				g.fillRect(columns[col]*GameData.GRID_WIDTH, rows[row]*GameData.GRID_HEIGHT, GameData.GRID_WIDTH-1, GameData.GRID_HEIGHT-1);
 			}
 		}
 	}

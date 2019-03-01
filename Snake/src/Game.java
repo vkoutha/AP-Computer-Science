@@ -18,6 +18,7 @@ public class Game implements KeyListener, ActionListener{
 	Renderer renderer;
 	KeyEvent keyPressed;
 	GameData.Directions movementDirection;
+	boolean swapped = true;
 	
 	public Game(){
 		
@@ -62,15 +63,6 @@ public class Game implements KeyListener, ActionListener{
 	}
 	
 	public void update(){
-		int[] tempRow = snake.getRows();
-		int[] tempCol = snake.getColumns();
-//		if(movementDirection == GameData.Directions.UP || movementDirection == GameData.Directions.DOWN){
-//			snake.setColumns(snake.getRows());
-//			snake.setRows(tempCol);
-//		}else{
-//			snake.setRows(snake.getColumns());
-//			snake.setColumns(tempRow);
-//		}
 		if(snake.outOfBounds())
 			System.exit(0);
 		if(movementDirection != null)
@@ -89,7 +81,7 @@ public class Game implements KeyListener, ActionListener{
 	@Override
 	public void keyPressed(KeyEvent key) {
 		// TODO Auto-generated method stub
-	//	System.out.println("something killed");
+		GameData.Directions prevDirection = movementDirection;
 		switch(key.getKeyCode()){
 		case KeyEvent.VK_UP:
 			if(movementDirection != GameData.Directions.DOWN)
@@ -107,6 +99,9 @@ public class Game implements KeyListener, ActionListener{
 			if(movementDirection != GameData.Directions.LEFT)
 				movementDirection = GameData.Directions.RIGHT;
 			break;
+		}
+		if(prevDirection != movementDirection){
+			swapped = false;
 		}
 	}
 
