@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public abstract class SnakeFollower extends Snake {
+public class SnakeFollower extends Snake {
 	
 	private int[] rows, columns; 
 	
@@ -35,6 +35,11 @@ public abstract class SnakeFollower extends Snake {
 				g.fillRect(columns[col]*GameData.GRID_WIDTH, rows[row]*GameData.GRID_HEIGHT, GameData.GRID_WIDTH-1, GameData.GRID_HEIGHT-1);
 			}
 		}
+	}
+
+	public SnakeHead getHead() {
+		// TODO Auto-generated method stub
+		return (SnakeHead) Game.snake.get(0);
 	}
 
 }

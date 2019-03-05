@@ -72,7 +72,20 @@ public class Game implements KeyListener, ActionListener{
 		if(apple.isHit()){
 			System.out.println("HIT!!!");
 			apple.spawnNew();
-			snake.increaseLength();
+			switch(snake.get(snake.size()-1).getDirection()){
+			case LEFT:
+				snake.add(new SnakeFollower(snake.get(snake.size()-1).getRows(), new int[]{snake.get(snake.size()-1).getColumns()[0]-1}));
+				break;
+			case RIGHT:
+				snake.add(new SnakeFollower(snake.get(snake.size()-1).getRows(), new int[]{snake.get(snake.size()-1).getColumns()[0]-1}));
+				break;
+			case UP:
+				snake.add(new SnakeFollower(new int[]{snake.get(snake.size()-1).getRows()[0]+1}, snake.get(snake.size()-1).getColumns()));
+				break;
+			case DOWN:
+				snake.add(new SnakeFollower(new int[]{snake.get(snake.size()-1).getRows()[0]-1}, snake.get(snake.size()-1).getColumns()));
+				break;
+			}
 		}
 	}
 	

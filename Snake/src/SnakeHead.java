@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public abstract class SnakeHead extends Snake{
+public class SnakeHead extends Snake{
 	
 	private int[] rows, columns; 
 	private GameData.Directions direction;
@@ -82,13 +82,8 @@ public abstract class SnakeHead extends Snake{
 		return false;
 	}
 	
-	public void render(Graphics g){
-		g.setColor(Color.GREEN);
-		for(int row = 0; row < rows.length; row++){
-			for(int col = 0; col < columns.length; col++){
-				g.fillRect(columns[col]*GameData.GRID_WIDTH, rows[row]*GameData.GRID_HEIGHT, GameData.GRID_WIDTH-1, GameData.GRID_HEIGHT-1);
-			}
-		}
+	public SnakeHead getHead(){
+		return this;
 	}
 
 }

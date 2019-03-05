@@ -47,10 +47,19 @@ public abstract class Snake {
 	public int[] getColumns(){return columns;};
 	public int[] getRows(){return rows;};
 	
+	public GameData.Directions getDirection(){return direction;}
+	
 	public abstract SnakeHead getHead();
 	
 	public abstract boolean outOfBounds();
 	
-	public abstract void render(Graphics g);
+	public void render(Graphics g){
+		g.setColor(Color.GREEN);
+		for(int row = 0; row < rows.length; row++){
+			for(int col = 0; col < columns.length; col++){
+				g.fillRect(columns[col]*GameData.GRID_WIDTH, rows[row]*GameData.GRID_HEIGHT, GameData.GRID_WIDTH-1, GameData.GRID_HEIGHT-1);
+			}
+		}
+	}
 
 }
