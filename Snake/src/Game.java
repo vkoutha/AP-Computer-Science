@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -11,7 +12,7 @@ import javax.swing.Timer;
 public class Game implements KeyListener, ActionListener{
 	
 	public static Game game;
-	static Snake snake;
+	static ArrayList<Snake> snake;
 	static Apple apple;
 	static Grid[][] grid;
 	static JFrame frame;
@@ -23,7 +24,6 @@ public class Game implements KeyListener, ActionListener{
 	public Game(){
 		
 		frame = new JFrame("Slither Boy");
-		snake = new Snake();
 		renderer = new Renderer();
 		Timer timer = new Timer(20, this);
 	//	frame.setPreferredSize( Dimension(400, 400));
@@ -41,7 +41,8 @@ public class Game implements KeyListener, ActionListener{
 	}
 	
 	public void initialize(){
-		snake = new Snake();
+		snake = new ArrayList<Snake>();
+		snake.add(new SnakeHead(new int[]{GameData.GRID_ROWS/2}, new int[]{GameData.GRID_COLUMNS/2}));
 		apple = new Apple();
 		grid = new Grid[GameData.GRID_ROWS][GameData.GRID_COLUMNS];
 		for(int row = 0; row < grid.length; row++)
@@ -55,7 +56,8 @@ public class Game implements KeyListener, ActionListener{
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, frame.getWidth(), frame.getHeight());
 		apple.render(g);
-		snake.render(g);
+		for(int i = 0; i < snake.size(); i++)
+			snake.get(i).render(g);
 		for(int row = 0; row < grid.length; row++)
 			for(int column = 0; column < grid[row].length; column++)
 				//grid[row][column].render(g);
@@ -63,10 +65,10 @@ public class Game implements KeyListener, ActionListener{
 	}
 	
 	public void update(){
-		if(snake.outOfBounds())
+		if(snake.get(0).outOfBounds())
 			System.exit(0);
 		if(movementDirection != null)
-			snake.move(movementDirection);
+			snake.get(0).move(movementDirection);
 		if(apple.isHit()){
 			System.out.println("HIT!!!");
 			apple.spawnNew();
