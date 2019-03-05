@@ -45,6 +45,8 @@ public class Bank {
 
 	public void login() {
 		System.out.println("Enter login name");
+		if(clients.size() == 0)
+			System.out.println("No accounts available to log into");
 		String name = input.nextLine();
 		for(int i = 0; i < clients.size(); i++){
 			if(clients.get(i).name.equals(name)){
