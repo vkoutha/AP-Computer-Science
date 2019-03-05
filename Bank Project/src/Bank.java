@@ -44,9 +44,11 @@ public class Bank {
 	}
 
 	public void login() {
-		System.out.println("Enter login name");
-		if(clients.size() == 0)
+		if(clients.size() == 0){
 			System.out.println("No accounts available to log into");
+			return;
+		}
+		System.out.println("Enter login name");
 		String name = input.nextLine();
 		for(int i = 0; i < clients.size(); i++){
 			if(clients.get(i).name.equals(name)){
@@ -91,7 +93,7 @@ public class Bank {
 		System.out.println("Enter name of account");
 		String name = input.nextLine();
 		for(int i = 0; i < clients.size(); i++)
-			if(clients.get(i).equals(name)){
+			if(clients.get(i).name.equals(name)){
 				System.out.println("Account already exists!");
 				successful = false;
 			}
@@ -125,8 +127,13 @@ public class Bank {
 	}
 	
 	public void displayAccounts() {
+		if(clients.size() == 0){
+			System.out.println("No accounts available");
+			return;
+		}
+		System.out.println("------------------------------------");
 		for(BankAccount acc : clients) 
-				System.out.println(acc);	
+				System.out.println(acc + "\n------------------------------------");	
 	}
 	
 	public void closeAccount() {
