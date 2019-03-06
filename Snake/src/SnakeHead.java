@@ -3,10 +3,10 @@ import java.awt.Graphics;
 
 public class SnakeHead extends Snake{
 	
-	private int[] rows, columns; 
+	private int row, column; 
 	private GameData.Directions direction;
 	
-	public SnakeHead(int[] rows, int[] columns){
+	public SnakeHead(int rows, int columns){
 	//	rows = new int[]{(GameData.GRID_ROWS/2)-1, (GameData.GRID_ROWS/2)};
 	//	columns = new int[]{(GameData.GRID_COLUMNS/2)-1, (GameData.GRID_COLUMNS/2)};
 		super(rows, columns);
@@ -15,20 +15,16 @@ public class SnakeHead extends Snake{
 	public void move(GameData.Directions direction){
 		switch(direction){
 		case UP:
-			for(int r = 0; r < rows.length; r++)
-				rows[r]-=GameData.SNAKE_MOVEMENT_SPEED;
+			row-=GameData.SNAKE_MOVEMENT_SPEED;
 			break;
 		case DOWN:
-			for(int r = 0; r < rows.length; r++)
-				rows[r]+=GameData.SNAKE_MOVEMENT_SPEED;
+			row+=GameData.SNAKE_MOVEMENT_SPEED;
 			break;
 		case RIGHT:
-			for(int c = 0; c < columns.length; c++)
-				columns[c]+=GameData.SNAKE_MOVEMENT_SPEED;
+			column+=GameData.SNAKE_MOVEMENT_SPEED;
 			break;
 		case LEFT:
-			for(int c = 0; c < columns.length; c++)
-				columns[c]-=GameData.SNAKE_MOVEMENT_SPEED;
+			column-=GameData.SNAKE_MOVEMENT_SPEED;
 			break;
 		}
 		try {
@@ -39,47 +35,12 @@ public class SnakeHead extends Snake{
 		}
 	}
 	
-	public void increaseLength(){
-		if(direction == GameData.Directions.UP || direction == GameData.Directions.DOWN){
-			int[] temp = new int[rows.length+1];
-			for(int c = 0; c < rows.length; c++)
-				temp[c] = rows[c];
-			temp[temp.length-1] = rows[rows.length-1]-1;
-			rows = temp;
-			if(direction == GameData.Directions.UP)
-				rows[rows.length-1] = rows[rows.length-2]+1;
-			else
-				rows[rows.length-1] = rows[rows.length-2]-1;
-		}else{
-			int[] temp = new int[columns.length+1];
-			for(int c = 0; c < columns.length; c++)
-				temp[c] = columns[c];
-			temp[temp.length-1] = columns[columns.length-1]-1;
-			columns = temp;
-			if(direction == GameData.Directions.LEFT)
-				columns[columns.length-1] = columns[columns.length-2]-1;
-			else
-				columns[columns.length-1] = columns[columns.length-2]+1;
-		}
-	}
-	
-	public void setColumns(int[] col){columns = col;}
-	
-	public int[] getColumns(){return columns;}
-	
-	public void setRows(int[] row){rows = row;}
-
-	public int[] getRows(){return rows;}
-	
 	public int[] getTurningPoint(){
+		if (Game.prevDirection != Game.movementDirection){
+			Game.prevDirection = Game.movementDirection;
+			return new int[]{row, column};
+		}
 		return null;
-	}
-	
-	public boolean outOfBounds(){
-		if(rows[0] > GameData.GRID_ROWS || rows[0] < 0
-				|| columns[0] > GameData.GRID_COLUMNS || columns[0] < 0)
-			return true;
-		return false;
 	}
 	
 	public SnakeHead getHead(){

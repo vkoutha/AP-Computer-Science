@@ -14,10 +14,10 @@ public class Apple {
 	
 	public boolean isHit(){
 		for(int c = 0; c < columns.length; c++)
-			if(columns[c] != Game.snake.getColumns()[c])
+			if(columns[c] != Game.snake.get(0).getColumn())
 				return false;
 		for(int r = 0; r < columns.length; r++)
-			if(rows[r] != Game.snake.getRows()[r])
+			if(rows[r] != Game.snake.get(0).getRow())
 				return false;
 		return true;
 	}

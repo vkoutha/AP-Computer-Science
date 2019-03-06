@@ -3,16 +3,16 @@ import java.awt.Graphics;
 
 public abstract class Snake {
 	
-	private int[] rows, columns; 
+	private int row, column; 
 	private GameData.Directions direction;
 	
-	public Snake(int[] rows, int[] columns){
+	public Snake(int row, int column){
 	//	rows = new int[]{(GameData.GRID_ROWS/2)-1, (GameData.GRID_ROWS/2)};
 	//	columns = new int[]{(GameData.GRID_COLUMNS/2)-1, (GameData.GRID_COLUMNS/2)};
-		this.rows = rows;
-		this.columns = columns;
-		rows = new int[]{(GameData.GRID_ROWS/2)};
-		columns = new int[]{(GameData.GRID_COLUMNS/2)};
+		this.row = row;
+		this.column = column;
+		row = GameData.GRID_ROWS/2;
+		column = GameData.GRID_COLUMNS/2;
 	}
 	
 	public abstract void move(GameData.Directions direction);
@@ -41,25 +41,26 @@ public abstract class Snake {
 //		}
 //	}
 	
-	public void setColumns(int[] col){columns = col;};
-	public void setRows(int[] row){rows = row;};
+	public void setColumn(int col){column = col;};
+	public void setRo(int row){this.row = row;};
 	
-	public int[] getColumns(){return columns;};
-	public int[] getRows(){return rows;};
+	public int getColumn(){return column;};
+	public int getRow(){return row;};
 	
 	public GameData.Directions getDirection(){return direction;}
 	
 	public abstract SnakeHead getHead();
 	
-	public abstract boolean outOfBounds();
+	public boolean outOfBounds(){
+		if(row > GameData.GRID_ROWS || row < 0
+				|| column > GameData.GRID_COLUMNS || column < 0)
+			return true;
+		return false;
+	}
 	
 	public void render(Graphics g){
 		g.setColor(Color.GREEN);
-		for(int row = 0; row < rows.length; row++){
-			for(int col = 0; col < columns.length; col++){
-				g.fillRect(columns[col]*GameData.GRID_WIDTH, rows[row]*GameData.GRID_HEIGHT, GameData.GRID_WIDTH-1, GameData.GRID_HEIGHT-1);
-			}
-		}
+		g.fillRect(row*GameData.GRID_WIDTH, column*GameData.GRID_HEIGHT, GameData.GRID_WIDTH-1, GameData.GRID_HEIGHT-1);
 	}
 
 }

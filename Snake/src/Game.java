@@ -18,7 +18,7 @@ public class Game implements KeyListener, ActionListener{
 	static JFrame frame;
 	Renderer renderer;
 	KeyEvent keyPressed;
-	GameData.Directions movementDirection;
+	public static GameData.Directions prevDirection, movementDirection;
 	boolean swapped = true;
 	
 	public Game(){
@@ -42,14 +42,15 @@ public class Game implements KeyListener, ActionListener{
 	
 	public void initialize(){
 		snake = new ArrayList<Snake>();
-		snake.add(new SnakeHead(new int[]{GameData.GRID_ROWS/2}, new int[]{GameData.GRID_COLUMNS/2}));
+		snake.add(new SnakeHead(GameData.GRID_ROWS/2, GameData.GRID_COLUMNS/2));
 		apple = new Apple();
 		grid = new Grid[GameData.GRID_ROWS][GameData.GRID_COLUMNS];
 		for(int row = 0; row < grid.length; row++)
 			for(int column = 0; column < grid[row].length; column++){
 				grid[row][column] = new Grid(row, column);
 			}
-				
+		movementDirection = GameData.Directions.UP;
+		prevDirection = GameData.Directions.UP;
 	}
 	
 	public void render(Graphics g){
@@ -74,16 +75,16 @@ public class Game implements KeyListener, ActionListener{
 			apple.spawnNew();
 			switch(snake.get(snake.size()-1).getDirection()){
 			case LEFT:
-				snake.add(new SnakeFollower(snake.get(snake.size()-1).getRows(), new int[]{snake.get(snake.size()-1).getColumns()[0]-1}));
+				snake.add(new SnakeFollower(snake.get(snake.size()-1).getRow(), snake.get(snake.size()-1).getColumn()+1));
 				break;
 			case RIGHT:
-				snake.add(new SnakeFollower(snake.get(snake.size()-1).getRows(), new int[]{snake.get(snake.size()-1).getColumns()[0]-1}));
+				snake.add(new SnakeFollower(snake.get(snake.size()-1).getRow(), snake.get(snake.size()-1).getColumn()-1));
 				break;
 			case UP:
-				snake.add(new SnakeFollower(new int[]{snake.get(snake.size()-1).getRows()[0]+1}, snake.get(snake.size()-1).getColumns()));
+				snake.add(new SnakeFollower(snake.get(snake.size()-1).getRow()+1, snake.get(snake.size()-1).getColumn()));
 				break;
 			case DOWN:
-				snake.add(new SnakeFollower(new int[]{snake.get(snake.size()-1).getRows()[0]-1}, snake.get(snake.size()-1).getColumns()));
+				snake.add(new SnakeFollower(snake.get(snake.size()-1).getRow()-1, snake.get(snake.size()-1).getColumn()));
 				break;
 			}
 		}
@@ -96,7 +97,6 @@ public class Game implements KeyListener, ActionListener{
 	@Override
 	public void keyPressed(KeyEvent key) {
 		// TODO Auto-generated method stub
-		GameData.Directions prevDirection = movementDirection;
 		switch(key.getKeyCode()){
 		case KeyEvent.VK_UP:
 			if(movementDirection != GameData.Directions.DOWN)
@@ -114,9 +114,6 @@ public class Game implements KeyListener, ActionListener{
 			if(movementDirection != GameData.Directions.LEFT)
 				movementDirection = GameData.Directions.RIGHT;
 			break;
-		}
-		if(prevDirection != movementDirection){
-			swapped = false;
 		}
 	}
 
