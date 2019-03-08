@@ -49,7 +49,7 @@ public class BankAccount {
 
 	/**
 	*
-	*@see Object#toString
+	*@see Object#toString()
 	*/
 	public String toString() {
 		return "Name: " + name + "\nBalance: $" + balance;
