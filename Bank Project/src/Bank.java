@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class Bank {
 
-	ArrayList<BankAccount> clients = new ArrayList<BankAccount>();
-	BankAccount currentAccount;
-	Scanner input = new Scanner(System.in);
-	boolean toExit = false;
+	private ArrayList<BankAccount> clients = new ArrayList<BankAccount>();
+	private BankAccount currentAccount;
+	private Scanner input = new Scanner(System.in);
+	private boolean toExit = false;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
