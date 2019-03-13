@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class Bank {
 
-	ArrayList<BankAccount> clients = new ArrayList<BankAccount>();
-	BankAccount currentAccount;
-	Scanner input = new Scanner(System.in);
-	boolean toExit = false;
+	private ArrayList<BankAccount> clients = new ArrayList<BankAccount>();
+	private BankAccount currentAccount;
+	private Scanner input = new Scanner(System.in);
+	private boolean toExit = false;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -14,10 +14,18 @@ public class Bank {
 		bank.openBank();
 	}
 
+	/**
+	*
+	*Opens Bank Menu
+	*/
 	public void openBank() {
 		menu();
 	}
 
+	/**
+	*
+	*Menu for when starting BankAccount program; Includes login, create account, exit, and display account options
+	*/
 	public void menu() {
 		while (!toExit) {
 			System.out.println("Select an option\n1. Login\n2. Create Account\n3. Exit\n4. Display accounts");
@@ -43,6 +51,10 @@ public class Bank {
 		}
 	}
 
+	/**
+	*
+	*Allows user to log into their BankAccount if account is found
+	*/
 	public void login() {
 		if(clients.size() == 0){
 			System.out.println("No accounts available to log into");
@@ -61,6 +73,10 @@ public class Bank {
 		System.out.println("No account found - Returning to login");
 	}
 
+	/**
+	*
+	*Bank Account Menu when logged in; Includes Withdraw, Deposit, Close Account, and Log Out options
+	*/
 	public void bankAccountMenu() {
 		System.out.println("Welcome " + currentAccount.name + "! Your current balance is " + currentAccount.balance
 				+ "! Select an option\n1. Withdraw\n2. Deposit\n3. Close account \n4. Log out");
@@ -88,6 +104,10 @@ public class Bank {
 		}
 	}
 
+	/**
+	*
+	*Creates account for user, unless entered account name already exists in database
+	*/
 	public void openAccount() {
 		boolean successful = true;
 		System.out.println("Enter name of account");
@@ -108,24 +128,39 @@ public class Bank {
 		}
 	}
 
+	/**
+	*
+	*Closes the program
+	*/
 	public void exit() {
 		System.out.println("Exiting!");
 		toExit = true;
 	}
 
+	/**
+	*
+	*Withdraw Option from BankAccount Menu; Takes money out of user account
+	*/
 	public void withdraw() {
 		System.out.println("Enter withdrawl amount");
 		double amt = input.nextDouble();
 		currentAccount.withdraw(amt);
 	}
 
+	/**
+	*
+	*Deposit Option from BankAccount Menu; Puts money in of user account
+	*/
 	public void deposit() {
 		System.out.println("Enter deposit amount");
 		double amt = input.nextDouble();
 		currentAccount.deposit(amt);
-
 	}
 	
+	/**
+	*
+	*Displays all accounts that have been created
+	*/
 	public void displayAccounts() {
 		if(clients.size() == 0){
 			System.out.println("No accounts available");
@@ -136,11 +171,19 @@ public class Bank {
 				System.out.println(acc + "\n------------------------------------");	
 	}
 	
+	/**
+	*
+	*Deletes user account from database
+	*/
 	public void closeAccount() {
 		BankAccount accToRemove = currentAccount;
 		clients.remove(accToRemove);
 	}
 
+	/**
+	*
+	*Logs user out of their account
+	*/
 	public void logOut() {
 		System.out.println("Logging out!");
 		currentAccount = null;
