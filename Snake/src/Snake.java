@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 public abstract class Snake {
 	
-	private int row, column; 
+	protected int row, column; 
 	private GameData.Directions direction;
 	
 	public Snake(int row, int column){
@@ -16,7 +16,7 @@ public abstract class Snake {
 	}
 	
 	public abstract void move(GameData.Directions direction);
-	
+
 //	public void increaseLength(){
 //		if(direction == GameData.Directions.UP || direction == GameData.Directions.DOWN){
 //			int[] temp = new int[rows.length+1];
@@ -42,7 +42,7 @@ public abstract class Snake {
 //	}
 	
 	public void setColumn(int col){column = col;};
-	public void setRo(int row){this.row = row;};
+	public void setRow(int row){this.row = row;};
 	
 	public int getColumn(){return column;};
 	public int getRow(){return row;};
@@ -60,7 +60,7 @@ public abstract class Snake {
 	
 	public void render(Graphics g){
 		g.setColor(Color.GREEN);
-		g.fillRect(row*GameData.GRID_WIDTH, column*GameData.GRID_HEIGHT, GameData.GRID_WIDTH-1, GameData.GRID_HEIGHT-1);
+		g.fillRect(column*GameData.GRID_WIDTH, row*GameData.GRID_HEIGHT, GameData.GRID_WIDTH-1, GameData.GRID_HEIGHT-1);
 	}
 
 }

@@ -3,16 +3,15 @@ import java.awt.Graphics;
 
 public class SnakeHead extends Snake{
 	
-	private int row, column; 
 	private GameData.Directions direction;
+	private int[] turningPoint;
 	
 	public SnakeHead(int rows, int columns){
-	//	rows = new int[]{(GameData.GRID_ROWS/2)-1, (GameData.GRID_ROWS/2)};
-	//	columns = new int[]{(GameData.GRID_COLUMNS/2)-1, (GameData.GRID_COLUMNS/2)};
 		super(rows, columns);
 	}
 	
 	public void move(GameData.Directions direction){
+		this.direction = direction;
 		switch(direction){
 		case UP:
 			row-=GameData.SNAKE_MOVEMENT_SPEED;
@@ -38,9 +37,13 @@ public class SnakeHead extends Snake{
 	public int[] getTurningPoint(){
 		if (Game.prevDirection != Game.movementDirection){
 			Game.prevDirection = Game.movementDirection;
-			return new int[]{row, column};
+			turningPoint = new int[]{row, column};
 		}
-		return null;
+		return turningPoint;
+	}
+	
+	public GameData.Directions getDirection(){
+		return direction;
 	}
 	
 	public SnakeHead getHead(){

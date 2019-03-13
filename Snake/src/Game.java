@@ -68,8 +68,11 @@ public class Game implements KeyListener, ActionListener{
 	public void update(){
 		if(snake.get(0).outOfBounds())
 			System.exit(0);
-		if(movementDirection != null)
-			snake.get(0).move(movementDirection);
+		if(movementDirection != null){
+			System.out.println(movementDirection);
+			//snake.get(0).move(movementDirection);
+			snake.forEach(s -> s.move(movementDirection));
+		}
 		if(apple.isHit()){
 			System.out.println("HIT!!!");
 			apple.spawnNew();
