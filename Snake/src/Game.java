@@ -74,7 +74,6 @@ public class Game implements KeyListener, ActionListener{
 			snake.forEach(s -> s.move(movementDirection));
 		}
 		if(apple.isHit()){
-			System.out.println("HIT!!!");
 			apple.spawnNew();
 			switch(snake.get(snake.size()-1).getDirection()){
 			case LEFT:

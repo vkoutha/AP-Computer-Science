@@ -8,6 +8,7 @@ public class SnakeHead extends Snake{
 	
 	public SnakeHead(int rows, int columns){
 		super(rows, columns);
+		turningPoint = new int[]{row, column};
 	}
 	
 	public void move(GameData.Directions direction){
@@ -38,6 +39,7 @@ public class SnakeHead extends Snake{
 		if (Game.prevDirection != Game.movementDirection){
 			Game.prevDirection = Game.movementDirection;
 			turningPoint = new int[]{row, column};
+			System.out.println("NEW TURNING POINTTT");
 		}
 		return turningPoint;
 	}
