@@ -1,16 +1,16 @@
-import java.awt.Color;
-import java.awt.Graphics;
 
 public class SnakeFollower extends Snake {
-	
-	private int row, column; 
-	
-	public SnakeFollower(int rows, int columns){
-		super(rows, columns);
+		
+	public SnakeFollower(int row, int column){
+		super(row, column);
+		direction = getHead().getDirection();
 	}
 	
 	public void move(GameData.Directions direction){
-		
+		Game.movementDone = false;
+		row = Game.snake.get(Game.snake.indexOf(this)-1).getRow();
+		column = Game.snake.get(Game.snake.indexOf(this)-1).getColumn();
+		Game.movementDone = true;
 	}
 	
 	public SnakeHead getHead() {

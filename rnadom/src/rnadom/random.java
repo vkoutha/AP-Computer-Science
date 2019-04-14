@@ -3,8 +3,12 @@ package rnadom;
 public class random {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		test t = random::dfg;
+		t.da(t);
+	}
 		
+	public static void dfg(test t) {
+		System.out.println(t);
 	}
 	
 }

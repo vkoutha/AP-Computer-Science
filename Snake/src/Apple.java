@@ -8,8 +8,8 @@ public class Apple {
 	
 	public Apple(){
 		Random rand = new Random();
-		rows = new int[] {rand.nextInt(GameData.GRID_ROWS)-5};
-		columns = new int[] {rand.nextInt(GameData.GRID_COLUMNS)-5};
+		rows = new int[] {rand.nextInt(GameData.GRID_ROWS-2)};
+		columns = new int[] {rand.nextInt(GameData.GRID_COLUMNS-2)};
 	}
 	
 	public boolean isHit(){

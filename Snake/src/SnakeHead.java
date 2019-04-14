@@ -1,18 +1,15 @@
-import java.awt.Color;
-import java.awt.Graphics;
 
 public class SnakeHead extends Snake{
-	
-	private int row, column; 
-	private GameData.Directions direction;
-	
+		
+	private boolean movementComplete;
 	public SnakeHead(int rows, int columns){
-	//	rows = new int[]{(GameData.GRID_ROWS/2)-1, (GameData.GRID_ROWS/2)};
-	//	columns = new int[]{(GameData.GRID_COLUMNS/2)-1, (GameData.GRID_COLUMNS/2)};
 		super(rows, columns);
+		Game.movementDone = true;
 	}
 	
 	public void move(GameData.Directions direction){
+		Game.movementDone = false;
+		this.direction = direction;
 		switch(direction){
 		case UP:
 			row-=GameData.SNAKE_MOVEMENT_SPEED;
@@ -27,20 +24,11 @@ public class SnakeHead extends Snake{
 			column-=GameData.SNAKE_MOVEMENT_SPEED;
 			break;
 		}
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Game.movementDone = true;
 	}
 	
-	public int[] getTurningPoint(){
-		if (Game.prevDirection != Game.movementDirection){
-			Game.prevDirection = Game.movementDirection;
-			return new int[]{row, column};
-		}
-		return null;
+	public boolean isMovementComplete() {
+		return movementComplete;
 	}
 	
 	public SnakeHead getHead(){
