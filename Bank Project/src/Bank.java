@@ -78,29 +78,28 @@ public class Bank {
 	*Bank Account Menu when logged in; Includes Withdraw, Deposit, Close Account, and Log Out options
 	*/
 	public void bankAccountMenu() {
-		System.out.println("Welcome " + currentAccount.name + "! Your current balance is " + currentAccount.balance
-				+ "! Select an option\n1. Withdraw\n2. Deposit\n3. Close account \n4. Log out");
-		int selection = input.nextInt();
-		switch (selection) {
-		case 1:
-			withdraw();
-			bankAccountMenu();
-			break;
-		case 2:
-			deposit();
-			bankAccountMenu();
-			break;
-		case 3:
-			closeAccount();
-			logOut();
-			System.out.println("Account successfully closed!!");
-			break;
-		case 4:
-			logOut();
-			break;
-		default:
-			System.out.println("Not a valid option! Try again!");
-			bankAccountMenu();
+		while(currentAccount != null){
+			System.out.println("Welcome " + currentAccount.name + "! Your current balance is " + currentAccount.balance
+					+ "! Select an option\n1. Withdraw\n2. Deposit\n3. Close account \n4. Log out");
+			int selection = input.nextInt();
+			switch (selection) {
+			case 1:
+				withdraw();
+				break;
+			case 2:
+				deposit();  
+				break;
+			case 3:
+				closeAccount();
+				logOut();
+				System.out.println("Account successfully closed!!");
+				break;
+			case 4:
+				logOut();
+				break;
+			default:
+				System.out.println("Not a valid option! Try again!");
+			}
 		}
 	}
 

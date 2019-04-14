@@ -4,7 +4,11 @@ import java.awt.Graphics;
 public abstract class Snake {
 	
 	protected int row, column; 
+<<<<<<< HEAD
 	protected GameData.Directions direction;
+=======
+	private GameData.Directions direction;
+>>>>>>> branch 'master' of https://github.com/vkoutha/AP-Computer-Science.git
 	
 	public Snake(int row, int column){
 		this.row = row;
@@ -14,6 +18,33 @@ public abstract class Snake {
 	}
 	
 	public abstract void move(GameData.Directions direction);
+<<<<<<< HEAD
+=======
+
+//	public void increaseLength(){
+//		if(direction == GameData.Directions.UP || direction == GameData.Directions.DOWN){
+//			int[] temp = new int[rows.length+1];
+//			for(int c = 0; c < rows.length; c++)
+//				temp[c] = rows[c];
+//			temp[temp.length-1] = rows[rows.length-1]-1;
+//			rows = temp;
+//			if(direction == GameData.Directions.UP)
+//				rows[rows.length-1] = rows[rows.length-2]+1;
+//			else
+//				rows[rows.length-1] = rows[rows.length-2]-1;
+//		}else{
+//			int[] temp = new int[columns.length+1];
+//			for(int c = 0; c < columns.length; c++)
+//				temp[c] = columns[c];
+//			temp[temp.length-1] = columns[columns.length-1]-1;
+//			columns = temp;
+//			if(direction == GameData.Directions.LEFT)
+//				columns[columns.length-1] = columns[columns.length-2]-1;
+//			else
+//				columns[columns.length-1] = columns[columns.length-2]+1;
+//		}
+//	}
+>>>>>>> branch 'master' of https://github.com/vkoutha/AP-Computer-Science.git
 	
 	public void setColumn(int col){column = col;};
 	public void setRow(int row){this.row = row;};
