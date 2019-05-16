@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,29 +14,20 @@ import javax.swing.Timer;
 public class Main extends JPanel implements KeyListener, ActionListener{
 
 	private Thread loopThread;
+	private static SortingTypes sortingType = SortingTypes.RainbowLines;
 	public static JFrame frame;
-	public static int FRAME_WIDTH = 1500, FRAME_HEIGHT = 1250;
-	public static ArrayList<Line> colors;
-	
+	public static double FRAME_WIDTH = 2000, FRAME_HEIGHT = 1400;
+	public static ArrayList<SortingType> objs;
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
 	public Main() {
 		frame = new JFrame("Sorter");
-		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		frame.setSize((int)FRAME_WIDTH, (int)FRAME_HEIGHT);
 		frame.setLocationRelativeTo(null);
 		frame.addKeyListener(this);
 		frame.add(this);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		populate();
-//		try {
-//			Thread.sleep(2000);
-//			shuffle();
-//			Thread.sleep(3000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		insertionSort();
-		//bubbleSort();
 		Timer timer = new Timer(1, this);
 		timer.start();
 	}
@@ -45,39 +37,51 @@ public class Main extends JPanel implements KeyListener, ActionListener{
 	}
 	
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		colors.forEach(color -> color.render(g));
+		super.paintComponent(g);   
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, (int)FRAME_WIDTH, (int)FRAME_HEIGHT);
+		objs.forEach(color -> color.render(g));
 	}
-	
+	 
 	private static void populate() {
-		colors = new ArrayList<Line>();
+		objs = new ArrayList<SortingType>();
 		int r = 255, b = 0, g = 0;
-		for(int i = 0; i < 1500; i++) {
-			 if ( r == 255 && g < 255 && b == 0 ){
-		      g++;
-		     }
-		    if ( g == 255 && r > 0 && b == 0 ) {
-		      r--;
-		      }
-		    if ( g == 255 && b < 255 && r == 0 ) {
-		      b++;
-		      }
-		    if ( b == 255 && g > 0 && r == 0 ) {
-		      g--;
-		      }
-		    if ( b == 255 && r < 255 && g == 0 ) {
-		      r++;
-		      }
-		    if ( r == 255 && b > 0 && g == 0 ) {
-		      b--;
-		      }
-			colors.add(new Line(r, g, b, i));
+		for(int i = 0; i < 2000; i++) {
+			switch(sortingType) {
+			case RainbowLines:	
+				 if (r == 255 && g < 255 && b == 0 ){
+			      g++;
+			     }
+			    if ( g == 255 && r > 0 && b == 0 ) {
+			      r--;
+			      }
+			    if ( g == 255 && b < 255 && r == 0 ) {
+			      b++;
+			      }
+			    if ( b == 255 && g > 0 && r == 0 ) {
+			      g--;
+			      }
+			    if ( b == 255 && r < 255 && g == 0 ) {
+			      r++;
+			      }
+			    if ( r == 255 && b > 0 && g == 0 ) {
+			      b--;
+			      }
+				objs.add(new RainbowLine(r, g, b, i));
+				break;
+			case Points:
+				objs.add(new Points(i));
+				break;
+			case Bars:
+				objs.add(new Bar(i));
+				break;
+			}
 		}
 	}
 	
-	public static int getIndex(Line obj) {
-		for(int i = 0; i < colors.size(); i++) {
-			if(colors.get(i).equals(obj)) {
+	public static int getIndex(SortingType obj) {
+		for(int i = 0; i < objs.size(); i++) {
+			if(objs.get(i).equals(obj)) {
 				return i;
 			}
 		}
@@ -86,11 +90,11 @@ public class Main extends JPanel implements KeyListener, ActionListener{
 
 	public void shuffle() {
 		Random rand = new Random();
-		for(int i = 0; i < colors.size(); i++) {
-			int indexToSwap = rand.nextInt(colors.size());
-			Line tempLine = colors.get(indexToSwap);
-			colors.set(indexToSwap, colors.get(i));
-			colors.set(i, tempLine);
+		for(int i = 0; i < objs.size(); i++) {
+			int indexToSwap = rand.nextInt(objs.size());
+			SortingType tempLine = objs.get(indexToSwap);
+			objs.set(indexToSwap, objs.get(i));
+			objs.set(i, tempLine);
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
@@ -105,12 +109,12 @@ public class Main extends JPanel implements KeyListener, ActionListener{
 	}
 	
 	public void bubbleSort() {
-		for(int i = 0; i < colors.size(); i++) {
-			for(int i2 = 0; i2 < colors.size()-i-1; i2++) {
-				if(colors.get(i2).getVal() > colors.get(i2+1).getVal()) {
-					Line temp = colors.get(i2+1);
-					colors.set(i2+1, colors.get(i2));
-					colors.set(i2, temp);
+		for(int i = 0; i < objs.size(); i++) {
+			for(int i2 = 0; i2 < objs.size()-i-1; i2++) {
+				if(objs.get(i2).getVal() > objs.get(i2+1).getVal()) {
+					SortingType temp = objs.get(i2+1);
+					objs.set(i2+1, objs.get(i2));
+					objs.set(i2, temp);
 					slowDown(10);
 				}
 			}
@@ -118,48 +122,48 @@ public class Main extends JPanel implements KeyListener, ActionListener{
 	}
 	
 	public void insertionSort() { 
-        int n = colors.size(); 
+        int n = objs.size(); 
         for (int i = 1; i < n; ++i) { 
-            Line key = colors.get(i); 
+            SortingType key = objs.get(i); 
             int j = i - 1; 
-            while (j >= 0 && colors.get(j).getVal() > key.getVal()) {
-            	colors.set(j+1, colors.get(j));
+            while (j >= 0 && objs.get(j).getVal() > key.getVal()) {
+            	objs.set(j+1, objs.get(j));
                 j = j - 1; 
-                slowDown(10);
+                slowDown(5);
             } 
-            colors.set(j + 1, key);
+            objs.set(j + 1, key);
         } 
     } 
 	
 	  public void selectionSort() { 
-	        int n = colors.size(); 
+	        int n = objs.size(); 
 	        for (int i = 0; i < n-1; i++) { 
 	            int min_idx = i; 
 	            for (int j = i+1; j < n; j++) 
-	                if (colors.get(j).getVal() < colors.get(min_idx).getVal()) 
+	                if (objs.get(j).getVal() < objs.get(min_idx).getVal()) 
 	                    min_idx = j; 
-	            Line temp = colors.get(min_idx); 
-	            colors.set(min_idx, colors.get(i)); 
-	            colors.set(i, temp); 
+	            SortingType temp = objs.get(min_idx); 
+	            objs.set(min_idx, objs.get(i)); 
+	            objs.set(i, temp); 
 	            slowDown(1000);
 	        } 
 	  } 
 	  
 	  public int partition(int low, int high) { 
-		  Line pivot = colors.get(high);  
+		  SortingType pivot = objs.get(high);  
 		  int i = (low-1); 
 		  for (int j=low; j<high; j++) { 
-			  if (colors.get(j).getVal() <= pivot.getVal()) { 
+			  if (objs.get(j).getVal() <= pivot.getVal()) { 
 				  i++; 
-				  Line temp = colors.get(i); 
-				  colors.set(i, colors.get(j));
-				  colors.set(j, temp);
+				  SortingType temp = objs.get(i); 
+				  objs.set(i, objs.get(j));
+				  objs.set(j, temp);
 				  slowDown(250);
 			  } 
 		  } 
-		  Line temp = colors.get(i+1); 
-		  colors.set(i+1, colors.get(high)); 
-		  colors.set(high, temp); 
+		  SortingType temp = objs.get(i+1); 
+		  objs.set(i+1, objs.get(high)); 
+		  objs.set(high, temp); 
 		  slowDown(250);
 		  return i+1; 
 	  } 
@@ -176,44 +180,44 @@ public class Main extends JPanel implements KeyListener, ActionListener{
 		  int n1 = m - l + 1; 
           int n2 = r - m; 
   
-          Line[] L = new Line[n1]; 
-          Line[] R = new Line[n2]; 
+          SortingType[] L = new SortingType[n1]; 
+          SortingType[] R = new SortingType[n2]; 
   
           for (int i=0; i<n1; ++i) 
-              L[i] = colors.get(l + i); 
+              L[i] = objs.get(l + i); 
           for (int j=0; j<n2; ++j) 
-              R[j] = colors.get(m + 1+ j); 
+              R[j] = objs.get(m + 1+ j); 
   
  
           int i = 0, j = 0; 
   
           int k = l; 
           while (i < n1 && j < n2) {
-        		slowDown(300);
+        		slowDown(600);
               if (L[i].getVal() <= R[j].getVal()) { 
-                  colors.set(k, L[i]); 
+                  objs.set(k, L[i]); 
                   i++; 
               }else{ 
-                  colors.set(k, R[j]); 
+                  objs.set(k, R[j]); 
                   j++; 
               } 
               k++; 
           } 
   
           while (i < n1) { 
-        	slowDown(300);
-              colors.set(k, L[i]); 
+        	//slowDown(600);
+              objs.set(k, L[i]); 
               i++; 
               k++; 
           } 
   
           while (j < n2)  {
-        	  slowDown(300);
-              colors.set(k, R[j]); 
+        	  //slowDown(600);
+              objs.set(k, R[j]); 
               j++; 
               k++; 
           } 
-    	slowDown(300);
+    	//slowDown(300);
 	} 
 	  
 	public void mergeSort(int l, int r) { 
@@ -224,19 +228,6 @@ public class Main extends JPanel implements KeyListener, ActionListener{
   	        merge(l, m, r); 
         } 
 	} 
-	
-	public void toggleBlack(int index1, int index2) {
-		if(!colors.get(index1).isBlack()) {
-			colors.get(index1).setBlack(true);
-		}else{
-			colors.get(index1).setBlack(false);
-		}
-		if(!colors.get(index2).isBlack()) {
-			colors.get(index2).setBlack(true);
-		}else{
-			colors.get(index2).setBlack(false);
-		}
-	}
 	
 	public void slowDown(int multiplier) {
 		if(multiplier == 1) {
@@ -303,7 +294,7 @@ public class Main extends JPanel implements KeyListener, ActionListener{
 				loopThread.interrupt();
 			loopThread = new Thread() {
 				public void run() {
-					mergeSort(0, colors.size()-1);
+					mergeSort(0, objs.size()-1);
 				}
 			};
 			loopThread.start();
@@ -313,11 +304,24 @@ public class Main extends JPanel implements KeyListener, ActionListener{
 				loopThread.interrupt();
 			loopThread = new Thread() {
 				public void run() {
-					quickSort(0, colors.size()-1);
+					quickSort(0, objs.size()-1);
 				}
 			};
 			loopThread.start();
 			break;
+		case KeyEvent.VK_RIGHT:
+			switch(sortingType) {
+			case RainbowLines:
+				sortingType = SortingTypes.Points;
+				break;
+			case Points:
+				sortingType = SortingTypes.Bars;
+				break;
+			case Bars:
+				sortingType = SortingTypes.RainbowLines;
+				break;
+			}
+			populate();
 		}
 	}
 
@@ -331,6 +335,12 @@ public class Main extends JPanel implements KeyListener, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
+	}
+	
+	public enum SortingTypes{
+		RainbowLines,
+		Points,
+		Bars
 	}
 	
 	

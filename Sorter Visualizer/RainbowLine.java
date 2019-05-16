@@ -1,12 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Line{
+public class RainbowLine extends SortingType{
 	
 	private Color color;
 	private boolean isBlack = false;
 	private int val;
-	public Line(int r, int g, int b, int val) {
+	public RainbowLine(int r, int g, int b, int val) {
 		color = new Color(r, g, b);
 		this.val = val;
 	}
@@ -32,7 +32,7 @@ public class Line{
 			g.setColor(Color.BLACK);
 		else
 			g.setColor(color);
-		g.fillRect(Main.getIndex(this)*(Main.FRAME_WIDTH/Main.colors.size()), 0, Main.FRAME_WIDTH/Main.colors.size(), Main.FRAME_HEIGHT);
+		g.fillRect((int) (Main.getIndex(this)*(Main.FRAME_WIDTH/Main.objs.size())), 0, 1, (int)Main.FRAME_HEIGHT);
 	}
 
 }
