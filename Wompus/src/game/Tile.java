@@ -23,7 +23,7 @@ public class Tile {
 	
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.drawImage(GameData.grassSprite, (row*GameData.TILE_WIDTH), (column*GameData.TILE_HEIGHT), GameData.TILE_WIDTH+1, GameData.TILE_HEIGHT+3, null);
+		g.drawImage(GameData.grassSprite, (row*GameData.TILE_WIDTH), (column*GameData.TILE_HEIGHT), GameData.TILE_WIDTH+3, GameData.TILE_HEIGHT+5, null);
 	}
 
 }

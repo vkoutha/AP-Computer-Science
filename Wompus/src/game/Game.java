@@ -5,13 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import game.GameData.MovementDirections;
+import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 
-public class Game implements ActionListener, KeyListener{
+public class Game extends Application implements ActionListener, KeyListener{
 
 	public static Game game;
 	private JFrame frame;
@@ -19,6 +24,8 @@ public class Game implements ActionListener, KeyListener{
 	private Renderer renderer;
 	private Tile[][] tiles;
 	private Player player;
+	private Media themeSong;
+	private MediaPlayer musicPlayer;
 	
 	public Game() {
 		frame = new JFrame(GameData.FRAME_NAME);
@@ -32,8 +39,9 @@ public class Game implements ActionListener, KeyListener{
 		frame.setLocationRelativeTo(null);
 		frame.addKeyListener(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		timer.start();
 		initialize();
+		startMusic();
+		timer.start();
 	}
 	
 	private void initialize() {
@@ -48,6 +56,12 @@ public class Game implements ActionListener, KeyListener{
 		GameData.FRAME_HEIGHT_DIFFERENCE = frame.getHeight() - GameData.FRAME_HEIGHT;
 	}
 	
+	private void startMusic() {
+		themeSong = new Media(new File("theme.mp3").toURI().toString());
+		musicPlayer = new MediaPlayer(themeSong);
+		musicPlayer.play();
+	}
+	
 	public void render(Graphics g) {
 		for(Tile[] tileArr : tiles)
 			for(Tile tile : tileArr)
@@ -57,6 +71,10 @@ public class Game implements ActionListener, KeyListener{
 	
 	private void update() {
  		updateSize();
+ 		if(musicPlayer.getCurrentTime().greaterThanOrEqualTo(musicPlayer.getStopTime())) {
+ 			startMusic();
+ 		}
+ 		System.out.println(frame.getWidth());
 	}
 	
 	private void updateSize() {
@@ -115,6 +133,12 @@ public class Game implements ActionListener, KeyListener{
 	
 	public JFrame getFrame() {
 		return frame;
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
+		Application.launch();
 	}
 	
 }

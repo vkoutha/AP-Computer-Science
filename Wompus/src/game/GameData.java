@@ -9,13 +9,13 @@ import javax.imageio.ImageIO;
 public class GameData {
 	
 	public static final String FRAME_NAME = "Wumpus";
-	public static int FRAME_WIDTH = 1200;
-	public static int FRAME_HEIGHT = 1200;
+	public static int FRAME_WIDTH = 1000;
+	public static int FRAME_HEIGHT = 1000;
 	public static int FRAME_WIDTH_DIFFERENCE = 0;
 	public static int FRAME_HEIGHT_DIFFERENCE = 0;
 	public static final int UPDATE_SPEED_MS = -5;
 	
-	public static final int TILE_AMOUNT = 15;
+	public static final int TILE_AMOUNT = 10;
 	public static int TILE_WIDTH = (FRAME_WIDTH/TILE_AMOUNT);
 	public static int TILE_HEIGHT = (FRAME_HEIGHT/TILE_AMOUNT);
 
