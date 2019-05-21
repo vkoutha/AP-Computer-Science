@@ -3,8 +3,6 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import game.GameData.TileData;
-
 public class Tile {
 	
 	private int row;
@@ -25,8 +23,7 @@ public class Tile {
 	
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.drawLine(800, 0, 800, 800);
-		g.drawRect(row*TileData.TILE_WIDTH, column*TileData.TILE_HEIGHT, TileData.TILE_WIDTH, TileData.TILE_HEIGHT);
+		g.drawImage(GameData.grassSprite, (row*GameData.TILE_WIDTH), (column*GameData.TILE_HEIGHT), GameData.TILE_WIDTH+1, GameData.TILE_HEIGHT+3, null);
 	}
 
 }
