@@ -19,13 +19,15 @@ public class GameData {
 	public static int TILE_WIDTH = (FRAME_WIDTH/TILE_AMOUNT);
 	public static int TILE_HEIGHT = (FRAME_HEIGHT/TILE_AMOUNT);
 
-	public static BufferedImage grassSprite = null;
+	public static BufferedImage rockSprite = null, grassSprite = null;
 	public static BufferedImage characterSprite = null, characterFowardsStillSprite = null, characterForwardsRunningSprite = null,
 			characterBackwardsStillSprite = null, characterBackwardsRunningSprite = null, characterLeftStillSprite = null, characterLeftRunningSprite = null,
 			characterRightStillSprite = null, characterRightRunningSprite = null;
 	
 	static {
 		try {
+			rockSprite = ImageIO.read(new File("rockTile.png"));
+			rockSprite = rockSprite.getSubimage(10, 10, rockSprite.getWidth()-20, rockSprite.getHeight()-20);
 			grassSprite = ImageIO.read(new File("grassTile.jpg"));
 			grassSprite = grassSprite.getSubimage(50, 50, grassSprite.getWidth()-50, grassSprite.getHeight()-50);
 			characterSprite = ImageIO.read(new File("character.png"));

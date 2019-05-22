@@ -68,7 +68,7 @@ public class Game extends Application implements ActionListener, KeyListener{
 				tile.render(g);
 		player.render(g);
 	}
-	
+	 
 	private void update() {
  		updateSize();
  		if(musicPlayer.getCurrentTime().greaterThanOrEqualTo(musicPlayer.getStopTime())) {
@@ -82,7 +82,7 @@ public class Game extends Application implements ActionListener, KeyListener{
 			renderer.setPreferredSize(new Dimension(frame.getWidth() - GameData.FRAME_WIDTH_DIFFERENCE, 
 					frame.getHeight() - GameData.FRAME_HEIGHT_DIFFERENCE));
 			GameData.FRAME_WIDTH = (int) frame.getWidth() - GameData.FRAME_WIDTH_DIFFERENCE;
-			GameData.FRAME_HEIGHT = (int) frame.getHeight() - GameData.FRAME_WIDTH_DIFFERENCE;
+			GameData.FRAME_HEIGHT = (int) frame.getHeight() - GameData.FRAME_HEIGHT_DIFFERENCE;
 			GameData.TILE_WIDTH = GameData.FRAME_WIDTH/GameData.TILE_AMOUNT;
 			GameData.TILE_HEIGHT = GameData.FRAME_HEIGHT/GameData.TILE_AMOUNT;
 			;
@@ -96,6 +96,11 @@ public class Game extends Application implements ActionListener, KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) { 
 		switch(e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
 			System.out.println("Moved");
@@ -117,11 +122,6 @@ public class Game extends Application implements ActionListener, KeyListener{
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) { 
-		
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
  		renderer.repaint();
  		update();
@@ -133,6 +133,10 @@ public class Game extends Application implements ActionListener, KeyListener{
 	
 	public JFrame getFrame() {
 		return frame;
+	}
+	
+	public Tile[][] getTiles(){
+		return tiles;
 	}
 
 	@Override

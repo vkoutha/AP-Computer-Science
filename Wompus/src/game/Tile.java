@@ -7,6 +7,7 @@ public class Tile {
 	
 	private int row;
 	private int column;
+	private boolean isDiscovered;
 	
 	public Tile(int row, int column) {
 		this.row = row;
@@ -21,9 +22,17 @@ public class Tile {
 		return column;
 	}
 	
+	public void setDiscovered(boolean discovered) {
+		isDiscovered = discovered;
+	}
+	
 	public void render(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.drawImage(GameData.grassSprite, (row*GameData.TILE_WIDTH), (column*GameData.TILE_HEIGHT), GameData.TILE_WIDTH+3, GameData.TILE_HEIGHT+5, null);
+		if(!isDiscovered) {
+			g.drawImage(GameData.rockSprite, (column*GameData.TILE_WIDTH), (row*GameData.TILE_HEIGHT), GameData.TILE_WIDTH, GameData.TILE_HEIGHT, null);
+		}else{
+			g.drawImage(GameData.grassSprite, (column*GameData.TILE_WIDTH), (row*GameData.TILE_HEIGHT), GameData.TILE_WIDTH+3, GameData.TILE_HEIGHT+5, null);
+		}
 	}
 
 }

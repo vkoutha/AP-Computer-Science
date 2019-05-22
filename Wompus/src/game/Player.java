@@ -42,6 +42,7 @@ public class Player {
 				column++;
 			}
 		}
+		Game.game.getTiles()[row][column].setDiscovered(true);
 		movementDirection = direction;
 	}
 	
