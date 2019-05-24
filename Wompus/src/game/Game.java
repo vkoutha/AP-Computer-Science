@@ -7,18 +7,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.naming.InitialContext;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import javafx.application.Application;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
-
-public class Game extends Application implements ActionListener, KeyListener {
+public class Game implements ActionListener, KeyListener {
 
 	public static Game game;
 	private JFrame frame;
@@ -26,9 +24,8 @@ public class Game extends Application implements ActionListener, KeyListener {
 	private Renderer renderer;
 	private Tile[][] tiles;
 	private Player player;
-	private Media themeSong;
-	private MediaPlayer musicPlayer;
 	public JLabel explosionGIF;
+	private Clip themePlayer;
 
 	public Game() {
 		frame = new JFrame(GameData.FRAME_NAME);
@@ -61,9 +58,17 @@ public class Game extends Application implements ActionListener, KeyListener {
 	}
 
 	private void startMusic() { 
-		themeSong = new Media(getClass().getResource("/sound/theme.mp3").toExternalForm());
-		musicPlayer = new MediaPlayer(themeSong);
-		musicPlayer.play();
+		AudioInputStream audioIn;
+		try {
+			themePlayer = AudioSystem.getClip();
+			audioIn =  AudioSystem.getAudioInputStream(getClass().getResource("/sound/theme.wav"));
+			themePlayer.open(audioIn);
+			//themePlayer.start();
+			themePlayer.loop(-1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void render(Graphics g) {
@@ -75,9 +80,6 @@ public class Game extends Application implements ActionListener, KeyListener {
 
 	private void update() {
 		updateSize();
-		if (musicPlayer != null && musicPlayer.getCurrentTime().greaterThanOrEqualTo(musicPlayer.getStopTime())) {
-			startMusic();
-		}
 	}
 
 	private void updateSize() {
@@ -143,11 +145,6 @@ public class Game extends Application implements ActionListener, KeyListener {
 				game = new Game();
 			}
 		});
-	}
-
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
 	}
 
 }
