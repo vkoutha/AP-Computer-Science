@@ -45,6 +45,14 @@ public class Player {
 		movementDirection = direction;
 	}
 	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getColumn() {
+		return column;
+	}
+	
 	public void render(Graphics g) {
 		g.drawImage(spriteToUse, column * GameData.TILE_WIDTH, row * GameData.TILE_HEIGHT, GameData.TILE_WIDTH, GameData.TILE_HEIGHT, null);
 	}

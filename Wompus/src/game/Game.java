@@ -2,6 +2,7 @@ package game;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,7 +11,7 @@ import java.awt.event.KeyListener;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -26,6 +27,7 @@ public class Game implements ActionListener, KeyListener {
 	private Player player;
 	public JLabel explosionGIF;
 	private Clip themePlayer;
+	private boolean explosionInProgress;
 
 	public Game() {
 		frame = new JFrame(GameData.FRAME_NAME);
@@ -53,6 +55,9 @@ public class Game implements ActionListener, KeyListener {
 			}
 		}
 		player = new Player();
+		explosionGIF = new JLabel(GameData.explosionAnimation);
+		explosionGIF.setBounds(500, 500, 100, 100);
+		//renderer.add(explosionGIF);
 		GameData.FRAME_WIDTH_DIFFERENCE = frame.getWidth() - GameData.FRAME_WIDTH;
 		GameData.FRAME_HEIGHT_DIFFERENCE = frame.getHeight() - GameData.FRAME_HEIGHT;
 	}
@@ -120,6 +125,20 @@ public class Game implements ActionListener, KeyListener {
 			player.move(GameData.MovementDirections.DOWN);
 			break;
 		case KeyEvent.VK_SPACE:
+			if(!explosionInProgress) {
+				explosionInProgress = true;
+				explosionGIF.setBounds(player.getColumn() * GameData.TILE_WIDTH, player.getRow() * GameData.TILE_HEIGHT, GameData.TILE_WIDTH, GameData.TILE_HEIGHT);
+				renderer.add(explosionGIF);
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						long startTime = System.currentTimeMillis();
+						while(System.currentTimeMillis() - startTime < GameData.EXPLOSION_ANIMATION_TIME_MS);
+						renderer.remove(explosionGIF);
+						explosionInProgress = false;
+					}
+				}).start();
+			}
 			break;
 		}
 	}

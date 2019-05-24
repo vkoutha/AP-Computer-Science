@@ -1,9 +1,11 @@
 package game;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public class GameData {
 	
@@ -13,6 +15,7 @@ public class GameData {
 	public static int FRAME_WIDTH_DIFFERENCE = 0;
 	public static int FRAME_HEIGHT_DIFFERENCE = 0;
 	public static final int UPDATE_SPEED_MS = 20;
+	public static final int EXPLOSION_ANIMATION_TIME_MS = 1500;
 	
 	public static final int TILE_AMOUNT = 10;
 	public static int TILE_WIDTH = (FRAME_WIDTH/TILE_AMOUNT);
@@ -22,6 +25,8 @@ public class GameData {
 	public static BufferedImage characterSprite = null, characterFowardsStillSprite = null, characterForwardsRunningSprite = null,
 			characterBackwardsStillSprite = null, characterBackwardsRunningSprite = null, characterLeftStillSprite = null, characterLeftRunningSprite = null,
 			characterRightStillSprite = null, characterRightRunningSprite = null;
+	private static Image explosionImage = null;
+	public static ImageIcon explosionAnimation = null;
 	
 	static {
 		try {
@@ -38,6 +43,10 @@ public class GameData {
 			characterRightStillSprite = characterSprite.getSubimage(470, 600, 470, 590);
 			characterLeftRunningSprite = characterSprite.getSubimage(470, 1200, 460, 580);
 			characterLeftStillSprite = characterSprite.getSubimage(0, 1200, 460, 580);
+			explosionAnimation = new ImageIcon(GameData.class.getResource("/img/explosionGIF.gif"));
+			explosionImage = explosionAnimation.getImage().getScaledInstance((int) (TILE_WIDTH*1.25), TILE_HEIGHT, Image.SCALE_DEFAULT);
+			explosionAnimation = new ImageIcon(explosionImage);
+			//explosionAnimation.setImage(explosionBufferedImage.getScaledInstance(500, 500, Image.SCALE_DEFAULT));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
