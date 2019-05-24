@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -9,11 +8,11 @@ import javax.imageio.ImageIO;
 public class GameData {
 	
 	public static final String FRAME_NAME = "Wumpus";
-	public static int FRAME_WIDTH = 1000;
-	public static int FRAME_HEIGHT = 1000;
+	public static int FRAME_WIDTH = 800;
+	public static int FRAME_HEIGHT = 800;
 	public static int FRAME_WIDTH_DIFFERENCE = 0;
 	public static int FRAME_HEIGHT_DIFFERENCE = 0;
-	public static final int UPDATE_SPEED_MS = -5;
+	public static final int UPDATE_SPEED_MS = 20;
 	
 	public static final int TILE_AMOUNT = 10;
 	public static int TILE_WIDTH = (FRAME_WIDTH/TILE_AMOUNT);
@@ -26,11 +25,11 @@ public class GameData {
 	
 	static {
 		try {
-			rockSprite = ImageIO.read(new File("rockTile.png"));
+			rockSprite = ImageIO.read(GameData.class.getResource("/img/rockTile.png"));
 			rockSprite = rockSprite.getSubimage(10, 10, rockSprite.getWidth()-20, rockSprite.getHeight()-20);
-			grassSprite = ImageIO.read(new File("grassTile.jpg"));
-			grassSprite = grassSprite.getSubimage(50, 50, grassSprite.getWidth()-50, grassSprite.getHeight()-50);
-			characterSprite = ImageIO.read(new File("character.png"));
+			grassSprite = ImageIO.read(GameData.class.getResource("/img/grassTile.jpg"));
+			grassSprite = grassSprite.getSubimage(50, 50, grassSprite.getWidth()-70, grassSprite.getHeight()-80);
+			characterSprite = ImageIO.read(GameData.class.getResource("/img/character.png"));
 			characterBackwardsRunningSprite = characterSprite.getSubimage(0, 0, 460, 590);
 			characterBackwardsStillSprite = characterSprite.getSubimage(470, 0, 460, 560);
 			characterForwardsRunningSprite = characterSprite.getSubimage(0, 1810, 460, 590); 
@@ -42,7 +41,7 @@ public class GameData {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 	}
 	
 	public enum MovementDirections{
