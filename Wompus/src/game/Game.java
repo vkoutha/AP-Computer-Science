@@ -88,14 +88,18 @@ public class Game implements ActionListener, KeyListener {
 	}
 
 	private void updateSize() {
-		if (frame.getPreferredSize().getWidth() != GameData.FRAME_WIDTH
-				|| frame.getPreferredSize().getHeight() != GameData.FRAME_HEIGHT) {
+		if (frame.getWidth() - GameData.FRAME_WIDTH_DIFFERENCE != GameData.FRAME_WIDTH
+				|| frame.getHeight() - GameData.FRAME_HEIGHT_DIFFERENCE != GameData.FRAME_HEIGHT) {
 			renderer.setPreferredSize(new Dimension(frame.getWidth() - GameData.FRAME_WIDTH_DIFFERENCE,
 					frame.getHeight() - GameData.FRAME_HEIGHT_DIFFERENCE));
 			GameData.FRAME_WIDTH = (int) frame.getWidth() - GameData.FRAME_WIDTH_DIFFERENCE;
 			GameData.FRAME_HEIGHT = (int) frame.getHeight() - GameData.FRAME_HEIGHT_DIFFERENCE;
 			GameData.TILE_WIDTH = GameData.FRAME_WIDTH / GameData.TILE_AMOUNT;
 			GameData.TILE_HEIGHT = GameData.FRAME_HEIGHT / GameData.TILE_AMOUNT;
+			GameData.rescaleAnimations();
+			renderer.remove(explosionGIF);
+			explosionGIF = new JLabel(GameData.explosionAnimation);
+			System.out.println("REsizing");
 		}
 	}
 

@@ -53,6 +53,11 @@ public class GameData {
 		}
 	}
 	
+	public static void rescaleAnimations() {
+		explosionImage = explosionAnimation.getImage().getScaledInstance((int) (TILE_WIDTH*1.25), TILE_HEIGHT, Image.SCALE_DEFAULT);
+		explosionAnimation = new ImageIcon(explosionImage);
+	}
+	
 	public enum MovementDirections{
 		UP,
 		DOWN,
